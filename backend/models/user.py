@@ -14,6 +14,8 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    interviews = db.relationship("Interview", back_populates="user", cascade="all, delete-orphan")
+
     def __repr__(self):
         return f'<User {self.email}>'
     
