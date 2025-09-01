@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import AuthRoute from './routes/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
+import Round1 from './pages/Round1';
 import HowItWorks from './components/sections/HowItWorks';
 import Features from './components/sections/Features';
 import Support from './components/sections/Support';
@@ -28,6 +29,7 @@ export default function App() {
           <Route element={<AuthRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/round1" element={<Round1 />} />
           </Route>
 
           <Route path="*" element={<Marketing />} />

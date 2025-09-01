@@ -37,7 +37,6 @@ def upload_resume():
 
 @resume_bp.route('/get-resume-jd', methods=['GET'])
 def get_resume_and_jd():
-    """Fetch saved Resume & JD (for Round 2 use)"""
     try:
         user_id = get_current_user_id(request)
         result = resume_service.get_resume_and_jd(user_id)

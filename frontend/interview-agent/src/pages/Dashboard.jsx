@@ -7,6 +7,7 @@ import RoundCard from '../components/ui/RoundCard';
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -22,7 +23,7 @@ export default function Dashboard() {
             title="Round 1 (Basic / Initial)"
             description="Start with introductory questions about your background and experience."
             actionText="Start Round 1"
-            onAction={() => {}}
+            onAction={() => navigate('/round1')}
           />
           <RoundCard 
             title="Round 2 (Technical)"

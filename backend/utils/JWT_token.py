@@ -13,8 +13,12 @@ def _get_bool(value: str) -> bool:
 
 
 def get_jwt_secret() -> str:
-	"""Return JWT secret from env or fallback to app secret key."""
-	return os.getenv("JWT_SECRET", Settings.SECRET_KEY)
+	"""Return JWT secret from env or fallback to app secret key, with a safe default in dev."""
+	secret = os.getenv("JWT_SECRET") or getattr(Settings, "SECRET_KEY", None)
+	if not secret:
+		# Dev fallback; ensure not used in production
+		secret = "dev-secret-change-me"
+	return secret
 
 
 def _build_payload(user_id: int, token_type: str, expires_in_seconds: int) -> dict:
@@ -46,15 +50,36 @@ def decode_token(token: str) -> dict:
 
 
 def get_token_from_request(req: Request, token_name: str = "access_token") -> Optional[str]:
-	"""Fetch token from Authorization header (Bearer) or cookies by name."""
+	"""Fetch token from Authorization header (Bearer), cookies, query, or form.
+
+	Priority:
+	1) Authorization: Bearer <token>
+	2) Cookie by name
+	3) Query string ?access_token=...
+	4) Form field (for multipart/form-data uploads)
+	"""
+	# 1) Authorization header
 	auth_header = req.headers.get("Authorization", "")
 	if auth_header.startswith("Bearer "):
 		return auth_header.split(" ", 1)[1].strip()
 
-	# Fallback to cookie
+	# 2) Cookie
 	cookie_val = req.cookies.get(token_name)
 	if cookie_val:
 		return cookie_val
+
+	# 3) Query param
+	query_val = req.args.get(token_name)
+	if query_val:
+		return query_val
+
+	# 4) Form field (useful for multipart requests)
+	try:
+		form_val = req.form.get(token_name)
+		if form_val:
+			return form_val
+	except Exception:
+		pass
 
 	return None
 

@@ -7,6 +7,8 @@ import CTABtn from '../components/ui/CTABtn';
 import { useNavigate } from 'react-router-dom';
 import { useResume } from '../hooks/useResume';
 import { useToast } from '../contexts/ToastContext';
+import { useAuth } from '../contexts/AuthContext';
+import { round1Service } from '../services/round1Service';
 
 export default function Home() {
   const { data, loading, error, upload, fetch } = useResume();
@@ -16,8 +18,16 @@ export default function Home() {
   const [resumeUploaded, setResumeUploaded] = useState(false);
   const [jdUploaded, setJdUploaded] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleStart = async () => {
+    // Ensure user is authenticated
+    if (!localStorage.getItem('ia_access_token')) {
+      toast?.warning?.('Please log in to start the interview');
+      navigate('/login');
+      return;
+    }
+
     // Ensure both are sent to backend before starting interview
     const formData = new FormData();
     if (resumeFile) {
@@ -33,7 +43,9 @@ export default function Home() {
     }
     try {
       await upload(formData);
-      navigate('/dashboard');
+  // Start the interview round now so Round1 can rehydrate immediately
+  try { await round1Service.startRound(); } catch (_) {}
+  navigate('/round1');
     } catch (e) {
     }
   };
@@ -80,7 +92,8 @@ export default function Home() {
       <Header />
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Get Ready for Your AI Interview</h1>
+  <h1 className="text-3xl font-bold text-gray-900 mb-2">Get Ready for Your AI Interview</h1>
+  <p className="text-gray-600 mb-8">Hey{user?.name ? `, ${user.name}` : ''}, welcome back.</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
