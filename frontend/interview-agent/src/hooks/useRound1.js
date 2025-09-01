@@ -46,7 +46,7 @@ export function useRound1() {
       setError(e.message);
       setPhase("error");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, []);
 
   const nextQuestion = useCallback(async () => {
@@ -82,7 +82,6 @@ export function useRound1() {
         setPhase("submitting");
         const { transcript, evaluation, completed, summary: finalSummary } =
           await round1Service.submitAnswer(currentQuestion.questionId, audioBlob);
-  console.log('[Round1] submitAnswer:', { completed, transcriptPreview: transcript?.slice?.(0, 50) || '' });
 
         setHistory((h) => [
           ...h,
@@ -123,7 +122,6 @@ export function useRound1() {
   const rehydrate = useCallback(async () => {
     try {
       const status = await round1Service.getStatus();
-      console.log('[Round1] getStatus rehydrate:', status);
       const rStatus = (status?.round_status || status?.status || '').toLowerCase();
       if (rStatus === 'complete' || rStatus === 'completed') {
         const sum = await round1Service.getSummary().catch(() => null);

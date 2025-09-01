@@ -21,7 +21,6 @@ export default function Home() {
   const { user } = useAuth();
 
   const handleStart = async () => {
-    // Ensure user is authenticated
     if (!localStorage.getItem('ia_access_token')) {
       toast?.warning?.('Please log in to start the interview');
       navigate('/login');
@@ -68,7 +67,7 @@ export default function Home() {
           }
           // If both already present, inform the user
           if ((result?.resumeName || result?.resumeUrl) && jd) {
-            toast.info('Resume & JD alredy uploaded');
+            toast.info('Resume & JD already uploaded');
           }
         } else {
           setJdUploaded(false);
@@ -92,8 +91,15 @@ export default function Home() {
       <Header />
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
-  <h1 className="text-3xl font-bold text-gray-900 mb-2">Get Ready for Your AI Interview</h1>
-  <p className="text-gray-600 mb-8">Hey{user?.name ? `, ${user.name}` : ''}, welcome back.</p>
+  <h1
+    className="mb-2 text-2xl sm:text-3xl font-semibold leading-snug tracking-tight bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
+    style={{ textShadow: '0 1px 1px rgba(0,0,0,0.08)' }}
+  >
+    {user?.name ? `Welcome back, ${user.name}!` : 'Welcome back!'}
+  </h1>
+  <p className="mb-6 text-lg sm:text-xl font-semibold tracking-wide text-gray-900">
+    Get Ready for Your <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">AI Interview</span>
+  </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>

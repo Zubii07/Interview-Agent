@@ -1,11 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, CheckCircle2, AlertCircle } from 'lucide-react';
 
-/**
- * Collapsible evaluations list and optional summary panel
- * @param {Array} history - [{ questionId, question, transcript, evaluation }]
- * @param {Object|null} summary - Optional final summary JSON
- */
 export default function EvaluationDropdown({ history = [], summary = null }) {
   const [open, setOpen] = useState(true);
 

@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mic, MicOff, Timer } from 'lucide-react';
 
-/**
- * Microphone recorder using MediaRecorder, returns a Blob via onSubmit.
- * Shows a simple timer and pulsing mic while recording.
- */
 export default function AnswerRecorder({ disabled, onSubmit, maxSeconds = 90 }) {
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);

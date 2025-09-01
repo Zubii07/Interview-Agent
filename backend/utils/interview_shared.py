@@ -1,23 +1,4 @@
-# utils/interview_shared.py
-"""
-Shared utilities for interview workflows (question generation, TTS/STT glue,
-LLM-based evaluation and summarization) used by service layers.
-"""
-
 from __future__ import annotations
-
-import json
-import os
-import random
-#!/usr/bin/env python3
-# utils/interview_shared.py
-"""
-Shared utilities for interview workflows (question generation, TTS/STT glue,
-LLM-based evaluation and summarization) used by service layers.
-"""
-
-
-
 import json
 import os
 import random
@@ -53,13 +34,6 @@ PASS_THRESHOLD = 70
 
 
 class InterviewUtils:
-    """Utility methods for managing interview lifecycle pieces.
-
-    This class intentionally contains only stateless helpers or DB-light
-    operations that can be reused across services and future rounds.
-    """
-
-    # -------------------- JSON parsing helpers --------------------
     @staticmethod
     def _strip_fences(s: str) -> str:
         s = s.strip()
@@ -73,11 +47,6 @@ class InterviewUtils:
 
     @staticmethod
     def _parse_json_safely(text: Optional[str]) -> Optional[Dict[str, Any]]:
-        """Best-effort JSON parse that tolerates code fences and extra text.
-
-        Tries several heuristics since LLMs can wrap JSON in prose or code
-        fences. Returns None if parsing fails.
-        """
         if not text:
             return None
         s = InterviewUtils._strip_fences(text)
@@ -102,8 +71,6 @@ class InterviewUtils:
         except Exception:
             pass
         return None
-
-    # -------------------- Interview + Round helpers --------------------
     @staticmethod
     def ensure_or_create_interview(user_id: int) -> Interview:
         """Fetch existing interview for user or create a new in-progress one."""
@@ -142,10 +109,7 @@ class InterviewUtils:
 
     @staticmethod
     def generate_and_store_questions(user: User, round_obj: InterviewRound, num_q: int = 5) -> List[InterviewQuestion]:
-        """Generate interview questions using LangChain chain and persist them.
 
-        Ensures variety by passing a time/random-based "randomizer" seed.
-        """
         # Ask chain for questions
         randomizer = f"{time.time()}-{random.randint(1000, 9999)}"
         # Debug: log input basics
@@ -212,7 +176,6 @@ class InterviewUtils:
             pass
         return created
 
-    # -------------------- Media helpers --------------------
     @staticmethod
     def get_next_unanswered(round_obj: InterviewRound) -> Optional[InterviewQuestion]:
         """Return the next unanswered question for the given round (or None)."""
@@ -224,11 +187,6 @@ class InterviewUtils:
 
     @staticmethod
     def text_to_speech(text: str, filename: Optional[str] = None) -> str:
-        """Convert text to speech and return a URL path to the audio file.
-
-        Ensures the static/audio directory exists. The underlying TTS util
-        returns a "/static/..." URL path which the frontend can fetch.
-        """
         os.makedirs(os.path.join("static", "audio"), exist_ok=True)
         safe_name = filename or f"q_{int(time.time())}_{random.randint(1000,9999)}"
         audio_url = tts_text_to_speech(text, filename=safe_name)
@@ -239,13 +197,8 @@ class InterviewUtils:
         """Transcribe audio at the given file path to text using Whisper STT."""
         return STT.transcribe_audio(audio_path)
 
-    # -------------------- LLM evaluation + summary --------------------
     @staticmethod
     def evaluate_answer(question: str, answer: str, resume: str, jd: str) -> Dict[str, Any]:
-        """Evaluate an answer via LLM and normalize the output schema.
-
-        Returns a dict with at least: score (0-10), feedback (str), criteria_met (bool).
-        """
         messages = [
             SystemMessage(content=EVAL_SYSTEM_PROMPT),
             HumanMessage(

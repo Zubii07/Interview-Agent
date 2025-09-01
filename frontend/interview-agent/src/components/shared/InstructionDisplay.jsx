@@ -2,9 +2,6 @@
 import React from 'react';
 import { Volume2 } from 'lucide-react';
 
-/**
- * Reusable component for displaying interview instructions
- */
 const InstructionsDisplay = ({ instructions }) => {
   if (!instructions) return null;
 

@@ -8,7 +8,6 @@ import { Volume2 } from 'lucide-react';
 
 export default function Round1() {
   const { phase, currentQuestion, progress, history, summary, error, start, submit, retry } = useRound1();
-  console.log('[UI] Round1 render:', { phase, progress, hasQuestion: !!currentQuestion, historyLen: history.length, hasSummary: !!summary });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -46,7 +45,6 @@ export default function Round1() {
             >
               Start Interview
             </button>
-            <div className="text-xs text-gray-500 mt-2">Flow: UploadResume → StartRound1 → QuestionsPage</div>
           </div>
         )}
 
