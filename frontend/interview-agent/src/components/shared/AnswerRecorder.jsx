@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mic, MicOff, Timer } from 'lucide-react';
+import { useToast } from '../../contexts/ToastContext';
 
 export default function AnswerRecorder({ disabled, onSubmit, maxSeconds = 90 }) {
   const [recording, setRecording] = useState(false);
@@ -7,6 +8,7 @@ export default function AnswerRecorder({ disabled, onSubmit, maxSeconds = 90 }) 
   const chunksRef = useRef([]);
   const [seconds, setSeconds] = useState(0);
   const timerRef = useRef(null);
+  const toast = useToast();
 
   useEffect(() => {
     return () => {
@@ -49,9 +51,9 @@ export default function AnswerRecorder({ disabled, onSubmit, maxSeconds = 90 }) 
       }, 1000);
       setMediaRecorder(mr);
       setRecording(true);
-    } catch (error) {
-      console.error('Failed to start recording:', error);
-      alert('Microphone access denied or not available');
+  } catch {
+  // Show a user-friendly error without logging to console
+  toast.error('Microphone access denied or not available');
     }
   };
 

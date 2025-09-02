@@ -7,8 +7,8 @@ export const saveUser = (user) => {
   
   try {
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
-  } catch (error) {
-    console.warn('Failed to save user to localStorage:', error);
+  } catch {
+  // silent fail in production
   }
 };
 
@@ -19,8 +19,8 @@ export const getUser = () => {
     const raw = localStorage.getItem(USER_STORAGE_KEY);
     if (!raw) return null;
     return JSON.parse(raw);
-  } catch (error) {
-    console.warn('Failed to get user from localStorage:', error);
+  } catch {
+  // silent fail in production
     localStorage.removeItem(USER_STORAGE_KEY); // Clean up corrupted data
     return null;
   }
@@ -31,8 +31,8 @@ export const clearUser = () => {
   
   try {
     localStorage.removeItem(USER_STORAGE_KEY);
-  } catch (error) {
-    console.warn('Failed to clear user from localStorage:', error);
+  } catch {
+  // silent fail in production
   }
 };
 
@@ -42,8 +42,8 @@ export const saveTokens = ({ accessToken, refreshToken }) => {
   try {
     if (accessToken) localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     if (refreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-  } catch (error) {
-    console.warn('Failed to save tokens to localStorage:', error);
+  } catch {
+  // silent fail in production
   }
 };
 
@@ -51,8 +51,8 @@ export const getAccessToken = () => {
   if (typeof window === 'undefined') return null;
   try {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
-  } catch (error) {
-    console.warn('Failed to get access token from localStorage:', error);
+  } catch {
+  // silent fail in production
     return null;
   }
 };
@@ -61,8 +61,8 @@ export const getRefreshToken = () => {
   if (typeof window === 'undefined') return null;
   try {
     return localStorage.getItem(REFRESH_TOKEN_KEY);
-  } catch (error) {
-    console.warn('Failed to get refresh token from localStorage:', error);
+  } catch {
+  // silent fail in production
     return null;
   }
 };
@@ -72,8 +72,8 @@ export const clearTokens = () => {
   try {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
-  } catch (error) {
-    console.warn('Failed to clear tokens from localStorage:', error);
+  } catch {
+  // silent fail in production
   }
 };
 

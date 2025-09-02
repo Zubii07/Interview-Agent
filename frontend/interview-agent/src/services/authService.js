@@ -127,9 +127,9 @@ export async function fetchSession() {
 export async function logout() {
   try {
     await apiLogout();
-  } catch (error) {
+  } catch {
     // Continue with logout even if API call fails
-    console.warn('Logout API call failed:', error);
+  // silent fail in production
   } finally {
     storage.clearUser();
     storage.clearTokens();

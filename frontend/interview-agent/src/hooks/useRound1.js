@@ -15,16 +15,13 @@ export function useRound1() {
     try {
       setPhase("starting");
       const info = await round1Service.startRound();
-      console.log('[Round1] StartRound response:', info);
       const status = (info?.status || '').toLowerCase();
       // If backend indicates complete, go to summary explicitly
       if (status === 'complete' || status === 'completed') {
-        console.warn('[Round1] Round status is complete on start; navigating to summary');
         try {
           const sum = await round1Service.getSummary();
           setSummary(sum?.result || sum || null);
         } catch (e) {
-          console.error('[Round1] Failed to fetch summary after complete status:', e);
         }
         setPhase('finished');
         return;
@@ -34,8 +31,7 @@ export function useRound1() {
       setHistory([]);
       setSummary(null);
       setProgress({ current: 0, total });
-      if (total <= 0) {
-        console.error('[Round1] No questions generated (totalQuestions is 0). Not redirecting to summary.');
+  if (total <= 0) {
         setError('No questions generated. Please retry.');
         setPhase('error');
         return;
@@ -52,11 +48,9 @@ export function useRound1() {
   const nextQuestion = useCallback(async () => {
     try {
       const q = await round1Service.getNextQuestion();
-      console.log('[Round1] getNextQuestion:', q);
       if (q.done) {
         // If done immediately and nothing answered yet, treat as generation issue
         if ((progress.current || 0) === 0 && (progress.total || 0) > 0 && history.length === 0) {
-          console.warn('[Round1] No questions available from server. Not redirecting to summary.');
           setError('No questions available right now. Please retry.');
           setPhase('error');
           return;

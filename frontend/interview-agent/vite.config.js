@@ -8,4 +8,17 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  optimizeDeps: {
+    include: ["lucide-react"]
+  },
+  build: {
+    commonjsOptions: {
+      include: [/node_modules/],
+    }
+  },
+  resolve: {
+    alias: {
+      "lucide-react": "lucide-react/dist/cjs/lucide-react.js"
+    }
+  }
 })

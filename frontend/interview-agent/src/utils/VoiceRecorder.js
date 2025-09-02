@@ -30,8 +30,7 @@ class VoiceRecorder {
       };
       
       return true;
-    } catch (error) {
-      console.error('Failed to initialize recorder:', error);
+  } catch {
       throw new Error('Microphone access denied or not available');
     }
   }
