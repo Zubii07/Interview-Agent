@@ -90,7 +90,7 @@ MAIL_USERNAME=your_email@example.com
 MAIL_PASSWORD=your_password
 MAIL_DEFAULT_SENDER=your_email@example.com
 COOKIE_SECURE=True
-COOKIE_SAMESITE=Lax
+COOKIE_SAMESITE=None
 ```
 
 ---
