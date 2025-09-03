@@ -11,7 +11,7 @@ The system leverages **LLMs with Voice I/O** to simulate real interview scenario
 * **Resume & JD Upload** – Upload documents to tailor interview questions.
 * **Round 1 (Implemented)**
 
-  * Basic questions about education, experience, and core subjects.
+  * Basic questions about education, experience, previous work history and core subjects.
   * LLM asks questions in **voice**.
   * Candidate answers in **voice**.
   * LLM evaluates responses, provides **feedback**, improvement tips, and **pass/fail** status.
@@ -24,13 +24,17 @@ The system leverages **LLMs with Voice I/O** to simulate real interview scenario
 
 ---
 
-## Tech Stack 🛠️
+## ⚙️ Tech Stack
 
-* **Backend**: Python 3.10.0, Flask/FastAPI (with SQLAlchemy, JWT, etc.)
-* **Frontend**: React (Vite, JSX, Context API, Hooks)
-* **AI Tools**: OpenAI API, Whisper (Speech-to-Text), TTS engines
-* **Database**: SQLite (dev), extensible to PostgreSQL/MySQL
-* **Email**: SMTP integration for notifications
+* *Frontend*: React (Vite), Context API, Hooks, Custom Components
+* *Backend*: Python/Flask, SQLite, SQLAlchemy (python version: 3.10)
+* *AI/Voice*:
+
+  * LLMs for *question generation & evaluation*
+  * Whisper (speech-to-text)
+  * TTS (text-to-speech for questions)
+* *Auth*: JWT-based authentication
+* *Deployment Ready*: .env configs for API keys, DB, and services
 
 ---
 
@@ -97,7 +101,7 @@ COOKIE_SAMESITE=Lax
 
 ```bash
 cd backend
-python -m venv venv
+python -m venv venv    
 source venv/bin/activate   # Linux/Mac
 venv\Scripts\activate      # Windows
 pip install -r requirements.txt
@@ -130,9 +134,10 @@ npm run dev
 Contributions are welcome!
 
 1. Fork the repo
-2. Create a new branch (`feature/xyz`)
-3. Commit changes
-4. Open a PR
+2. Create a feature branch: git checkout -b feature-name
+3. Commit your changes: git commit -m "Added new feature"
+4. Push the branch: git push origin feature-name
+5. Open a Pull Request
 
 ---
 
@@ -147,5 +152,3 @@ This project is licensed under the MIT License.
 **Happy Learning!**
 
 ---
-
-Do you want me to also add **sample API usage docs (auth, resume, round1)** inside the README so candidates or developers can test endpoints quickly?
