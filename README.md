@@ -26,15 +26,15 @@ The system leverages **LLMs with Voice I/O** to simulate real interview scenario
 
 ## ⚙️ Tech Stack
 
-* *Frontend*: React (Vite), Context API, Hooks, Custom Components
-* *Backend*: Python/Flask, SQLite, SQLAlchemy (python version: 3.10)
-* *AI/Voice*:
+* **Frontend**: React (Vite), Context API, Hooks, Custom Components
+* **Backend**: Python/Flask, SQLite, SQLAlchemy (python version: 3.10)
+* **AI/Voice**:
 
   * LLMs for *question generation & evaluation*
   * Whisper (speech-to-text)
   * TTS (text-to-speech for questions)
-* *Auth*: JWT-based authentication
-* *Deployment Ready*: .env configs for API keys, DB, and services
+* **Database**: SQLite (dev), extensible to PostgreSQL/MySQL
+* **Email**: SMTP integration for notifications
 
 ---
 
