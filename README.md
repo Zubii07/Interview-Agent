@@ -1,6 +1,6 @@
 # AI Voice Interview 🎙️🤖
 
-AI Voice Interview is a web-based platform that helps candidates to prepare for different interviews based on their **Resume** and **Job Description (JD)**.
+AI Voice Interview is a web-based platform that helps candidates prepare for different interviews based on their **Resume** and **Job Description (JD)**.
 The system leverages **LLMs with Voice I/O** to simulate real interview scenarios, provide instant feedback, and guide candidates toward improvement.
 
 ---
